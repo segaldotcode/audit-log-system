@@ -8,15 +8,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { Dictionary } from "@/lib/i18n";
 
 const ALL = "__all__";
 
 interface FilterBarProps {
   actions: string[];
   users: { id: string; email: string; persona_key: string }[];
+  dict: Dictionary;
 }
 
-export function FilterBar({ actions, users }: FilterBarProps) {
+export function FilterBar({ actions, users, dict }: FilterBarProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -40,13 +42,13 @@ export function FilterBar({ actions, users }: FilterBarProps) {
     <div className="flex flex-wrap items-center gap-3">
       <Select value={currentAction} onValueChange={(value) => updateParam("action", value)}>
         <SelectTrigger className="w-45">
-          <SelectValue placeholder="All actions" />
+          <SelectValue placeholder={dict.filters.allActions} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={ALL}>All actions</SelectItem>
+          <SelectItem value={ALL}>{dict.filters.allActions}</SelectItem>
           {actions.map((action) => (
             <SelectItem key={action} value={action}>
-              {action}
+              {dict.actions[action as keyof Dictionary["actions"]] ?? action}
             </SelectItem>
           ))}
         </SelectContent>
@@ -54,10 +56,10 @@ export function FilterBar({ actions, users }: FilterBarProps) {
 
       <Select value={currentUserId} onValueChange={(value) => updateParam("userId", value)}>
         <SelectTrigger className="w-50">
-          <SelectValue placeholder="All users" />
+          <SelectValue placeholder={dict.filters.allUsers} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={ALL}>All users</SelectItem>
+          <SelectItem value={ALL}>{dict.filters.allUsers}</SelectItem>
           {users.map((user) => (
             <SelectItem key={user.id} value={user.id}>
               {user.email}
@@ -68,7 +70,7 @@ export function FilterBar({ actions, users }: FilterBarProps) {
 
       <input
         type="date"
-        aria-label="From date"
+        aria-label={dict.filters.fromDate}
         defaultValue={searchParams.get("dateFrom")?.slice(0, 10) ?? ""}
         onChange={(event) =>
           updateParam(
@@ -81,7 +83,7 @@ export function FilterBar({ actions, users }: FilterBarProps) {
 
       <input
         type="date"
-        aria-label="To date"
+        aria-label={dict.filters.toDate}
         defaultValue={searchParams.get("dateTo")?.slice(0, 10) ?? ""}
         onChange={(event) =>
           updateParam(

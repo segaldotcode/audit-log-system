@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { EventRow } from "./event-row";
+import { formatDateHeading } from "@/lib/utils";
+import type { Dictionary, Locale } from "@/lib/i18n";
 import type { AuditLog } from "@/lib/audit/types";
 import type { AuditLogCursor, AuditLogFilters } from "@/lib/audit/queries";
 
@@ -7,15 +9,8 @@ interface TimelineProps {
   logs: AuditLog[];
   nextCursor: AuditLogCursor | null;
   filters: AuditLogFilters;
-}
-
-function formatDateHeading(dateKey: string): string {
-  return new Intl.DateTimeFormat("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(new Date(`${dateKey}T00:00:00`));
+  dict: Dictionary;
+  locale: Locale;
 }
 
 function groupByDate(logs: AuditLog[]): [string, AuditLog[]][] {
@@ -29,24 +24,25 @@ function groupByDate(logs: AuditLog[]): [string, AuditLog[]][] {
   return Array.from(groups.entries());
 }
 
-function buildNextHref(filters: AuditLogFilters, cursor: AuditLogCursor): string {
+function buildNextHref(
+  filters: AuditLogFilters,
+  cursor: AuditLogCursor,
+  locale: Locale,
+): string {
   const params = new URLSearchParams();
   if (filters.action) params.set("action", filters.action);
   if (filters.userId) params.set("userId", filters.userId);
   if (filters.dateFrom) params.set("dateFrom", filters.dateFrom);
   if (filters.dateTo) params.set("dateTo", filters.dateTo);
+  if (locale === "fr") params.set("lang", "fr");
   params.set("cursorCreatedAt", cursor.createdAt);
   params.set("cursorId", cursor.id);
   return `/?${params.toString()}`;
 }
 
-export function Timeline({ logs, nextCursor, filters }: TimelineProps) {
+export function Timeline({ logs, nextCursor, filters, dict, locale }: TimelineProps) {
   if (logs.length === 0) {
-    return (
-      <p className="py-10 text-center text-sm text-muted-foreground">
-        No audit events match these filters yet. Simulate one above to populate the timeline.
-      </p>
-    );
+    return <p className="py-10 text-center text-sm text-muted-foreground">{dict.timeline.empty}</p>;
   }
 
   return (
@@ -54,11 +50,11 @@ export function Timeline({ logs, nextCursor, filters }: TimelineProps) {
       {groupByDate(logs).map(([dateKey, events]) => (
         <section key={dateKey} className="space-y-2">
           <h2 className="text-sm font-medium text-muted-foreground">
-            {formatDateHeading(dateKey)}
+            {formatDateHeading(dateKey, locale)}
           </h2>
           <div className="space-y-1">
             {events.map((log) => (
-              <EventRow key={log.id} log={log} />
+              <EventRow key={log.id} log={log} dict={dict} locale={locale} />
             ))}
           </div>
         </section>
@@ -67,10 +63,10 @@ export function Timeline({ logs, nextCursor, filters }: TimelineProps) {
       {nextCursor && (
         <div className="pt-2 text-center">
           <Link
-            href={buildNextHref(filters, nextCursor)}
+            href={buildNextHref(filters, nextCursor, locale)}
             className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
           >
-            Load older events
+            {dict.timeline.loadOlder}
           </Link>
         </div>
       )}

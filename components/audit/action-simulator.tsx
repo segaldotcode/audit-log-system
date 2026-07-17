@@ -1,18 +1,16 @@
-import { simulateAuditEvent } from "@/app/actions";
+import { simulateAuditEvent } from "@/lib/actions/simulate-audit-event";
 import { AUDIT_ACTIONS } from "@/lib/audit/types";
+import type { Dictionary } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 
 interface ActionSimulatorProps {
   users: { id: string; email: string; persona_key: string }[];
+  dict: Dictionary;
 }
 
-export function ActionSimulator({ users }: ActionSimulatorProps) {
+export function ActionSimulator({ users, dict }: ActionSimulatorProps) {
   if (users.length === 0) {
-    return (
-      <p className="text-sm text-muted-foreground">
-        No personas found. Run supabase/schema.sql against your database first.
-      </p>
-    );
+    return <p className="text-sm text-muted-foreground">{dict.simulator.empty}</p>;
   }
 
   return (
@@ -22,7 +20,7 @@ export function ActionSimulator({ users }: ActionSimulatorProps) {
     >
       <div className="flex flex-col gap-1">
         <label htmlFor="userId" className="text-xs text-muted-foreground">
-          Persona
+          {dict.simulator.personaLabel}
         </label>
         <select
           id="userId"
@@ -40,7 +38,7 @@ export function ActionSimulator({ users }: ActionSimulatorProps) {
 
       <div className="flex flex-col gap-1">
         <label htmlFor="action" className="text-xs text-muted-foreground">
-          Action
+          {dict.simulator.actionLabel}
         </label>
         <select
           id="action"
@@ -50,14 +48,14 @@ export function ActionSimulator({ users }: ActionSimulatorProps) {
         >
           {AUDIT_ACTIONS.map((action) => (
             <option key={action} value={action}>
-              {action}
+              {dict.actions[action]}
             </option>
           ))}
         </select>
       </div>
 
       <Button type="submit" size="sm">
-        Simulate event
+        {dict.simulator.submit}
       </Button>
     </form>
   );
