@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { EventRow } from "./event-row";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { TimelineAccordion } from "./timeline-accordion";
+import { AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { formatDateHeading } from "@/lib/utils";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import type { AuditLog } from "@/lib/audit/types";
@@ -50,7 +51,7 @@ export function Timeline({ logs, nextCursor, filters, dict, locale }: TimelinePr
 
   return (
     <div className="space-y-4">
-      <Accordion multiple defaultValue={groups.map(([dateKey]) => dateKey)}>
+      <TimelineAccordion dateKeys={groups.map(([dateKey]) => dateKey)}>
         {groups.map(([dateKey, events]) => (
           <AccordionItem key={dateKey} value={dateKey}>
             <AccordionTrigger>{formatDateHeading(dateKey, locale)}</AccordionTrigger>
@@ -61,7 +62,7 @@ export function Timeline({ logs, nextCursor, filters, dict, locale }: TimelinePr
             </AccordionContent>
           </AccordionItem>
         ))}
-      </Accordion>
+      </TimelineAccordion>
 
       {nextCursor && (
         <div className="pt-2 text-center">
