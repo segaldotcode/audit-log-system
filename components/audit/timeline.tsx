@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { EventRow } from "./event-row";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { formatDateHeading } from "@/lib/utils";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import type { AuditLog } from "@/lib/audit/types";
@@ -45,20 +46,22 @@ export function Timeline({ logs, nextCursor, filters, dict, locale }: TimelinePr
     return <p className="py-10 text-center text-sm text-muted-foreground">{dict.timeline.empty}</p>;
   }
 
+  const groups = groupByDate(logs);
+
   return (
-    <div className="space-y-8">
-      {groupByDate(logs).map(([dateKey, events]) => (
-        <section key={dateKey} className="space-y-2">
-          <h2 className="text-sm font-medium text-muted-foreground">
-            {formatDateHeading(dateKey, locale)}
-          </h2>
-          <div className="space-y-1">
-            {events.map((log) => (
-              <EventRow key={log.id} log={log} dict={dict} locale={locale} />
-            ))}
-          </div>
-        </section>
-      ))}
+    <div className="space-y-4">
+      <Accordion multiple defaultValue={groups.map(([dateKey]) => dateKey)}>
+        {groups.map(([dateKey, events]) => (
+          <AccordionItem key={dateKey} value={dateKey}>
+            <AccordionTrigger>{formatDateHeading(dateKey, locale)}</AccordionTrigger>
+            <AccordionContent className="space-y-1">
+              {events.map((log) => (
+                <EventRow key={log.id} log={log} dict={dict} locale={locale} />
+              ))}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
 
       {nextCursor && (
         <div className="pt-2 text-center">
