@@ -15,6 +15,7 @@ export type AuditAction = (typeof AUDIT_ACTIONS)[number];
 export interface AuditLog {
   id: string;
   userId: string | null;
+  userEmail: string | null;
   action: AuditAction | (string & {});
   metadata: Record<string, unknown>;
   ip: string | null;
