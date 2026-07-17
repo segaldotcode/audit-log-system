@@ -39,7 +39,7 @@ export function EventRow({ log, dict, locale }: EventRowProps) {
           <button
             data-cuelume-hover="tick"
             data-cuelume-toggle
-            className="flex w-full items-center justify-between gap-3 rounded-md border border-transparent px-3 py-2 text-left text-sm transition-colors hover:border-border hover:bg-muted/50"
+            className="flex w-full cursor-pointer items-center justify-between gap-3 rounded-md border border-transparent px-3 py-2 text-left text-sm transition-colors hover:border-border hover:bg-muted/50"
           />
         }
       >
