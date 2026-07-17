@@ -41,8 +41,14 @@ export function FilterBar({ actions, users, dict }: FilterBarProps) {
   return (
     <div className="flex flex-wrap items-center gap-3">
       <Select value={currentAction} onValueChange={(value) => updateParam("action", value)}>
-        <SelectTrigger className="w-45" data-cuelume-press data-cuelume-release>
-          <SelectValue placeholder={dict.filters.allActions} />
+        <SelectTrigger className="w-48" data-cuelume-press data-cuelume-release>
+          <SelectValue placeholder={dict.filters.allActions}>
+            {(value: string | null) =>
+              !value || value === ALL
+                ? dict.filters.allActions
+                : (dict.actions[value as keyof Dictionary["actions"]] ?? value)
+            }
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           <SelectItem value={ALL} data-cuelume-toggle>
@@ -57,8 +63,14 @@ export function FilterBar({ actions, users, dict }: FilterBarProps) {
       </Select>
 
       <Select value={currentUserId} onValueChange={(value) => updateParam("userId", value)}>
-        <SelectTrigger className="w-50" data-cuelume-press data-cuelume-release>
-          <SelectValue placeholder={dict.filters.allUsers} />
+        <SelectTrigger className="w-52" data-cuelume-press data-cuelume-release>
+          <SelectValue placeholder={dict.filters.allUsers}>
+            {(value: string | null) =>
+              !value || value === ALL
+                ? dict.filters.allUsers
+                : (users.find((user) => user.id === value)?.email ?? value)
+            }
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           <SelectItem value={ALL} data-cuelume-toggle>
@@ -82,7 +94,7 @@ export function FilterBar({ actions, users, dict }: FilterBarProps) {
             event.target.value ? new Date(event.target.value).toISOString() : "",
           )
         }
-        className="h-9 rounded-md border border-input bg-transparent px-3 text-sm"
+        className="h-8 rounded-md border border-input bg-transparent px-3 text-sm"
       />
 
       <input
@@ -97,7 +109,7 @@ export function FilterBar({ actions, users, dict }: FilterBarProps) {
               : "",
           )
         }
-        className="h-9 rounded-md border border-input bg-transparent px-3 text-sm"
+        className="h-8 rounded-md border border-input bg-transparent px-3 text-sm"
       />
     </div>
   );

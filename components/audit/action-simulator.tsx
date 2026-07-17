@@ -26,7 +26,7 @@ export function ActionSimulator({ users, dict }: ActionSimulatorProps) {
           id="userId"
           name="userId"
           defaultValue={users[0].id}
-          className="h-9 rounded-md border border-input bg-transparent px-3 text-sm"
+          className="h-8 rounded-md border border-input bg-transparent px-3 text-sm"
         >
           {users.map((user) => (
             <option key={user.id} value={user.id}>
@@ -44,7 +44,7 @@ export function ActionSimulator({ users, dict }: ActionSimulatorProps) {
           id="action"
           name="action"
           defaultValue={AUDIT_ACTIONS[0]}
-          className="h-9 rounded-md border border-input bg-transparent px-3 text-sm"
+          className="h-8 rounded-md border border-input bg-transparent px-3 text-sm"
         >
           {AUDIT_ACTIONS.map((action) => (
             <option key={action} value={action}>
@@ -54,7 +54,7 @@ export function ActionSimulator({ users, dict }: ActionSimulatorProps) {
         </select>
       </div>
 
-      <Button type="submit" size="sm" data-cuelume-press data-cuelume-release>
+      <Button type="submit" data-cuelume-press data-cuelume-release>
         {dict.simulator.submit}
       </Button>
     </form>
