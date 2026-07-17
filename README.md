@@ -29,8 +29,17 @@ Coming soon.
 
 ## How to reuse
 
-Coming soon.
+1. Clone the repo and install dependencies: `pnpm install`
+2. Add your Supabase credentials to `.env.local` (see `.env.example`)
+3. Run `supabase/schema.sql` against your database to create the `audit_logs` table (it references the shared `users` table from `feature-flags-dashboard/supabase/schema.sql`)
+4. Optionally run `supabase/seed.sql` to populate a few days of demo activity, including two suspicious bursts for the detector to catch
+5. Run `pnpm dev`, then use the action simulator at the top of the dashboard to generate more events for any persona
 
 ## Architecture
 
-Coming soon.
+- `lib/audit/log-event.ts` is the single entry point every module should call to write to `audit_logs`; it sanitizes metadata (`lib/audit/sanitize-metadata.ts`) so sensitive keys like `password` or `token` never reach the table
+- `lib/audit/with-audit-log.ts` wraps a business action so its input, result (or error) and duration are captured and logged automatically, this is the "logging middleware" applied to actions instead of raw HTTP requests
+- `lib/audit/queries.ts` reads the timeline with keyset pagination on `(created_at, id)`, which stays fast at any page depth unlike `OFFSET`
+- `lib/audit/suspicious-activity.ts` slides a fixed time window over each user's recent events to flag rapid login attempts or payment bursts
+- `app/actions.ts` exposes a `simulateAuditEvent` server action used by the dashboard's action simulator to exercise the whole pipeline without depending on the other ecosystem modules
+- `app/page.tsx` composes the filter bar, suspicious activity banner, action simulator and timeline, all server-rendered from the same Supabase read
