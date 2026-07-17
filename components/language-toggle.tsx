@@ -15,7 +15,13 @@ export function LanguageToggle({ locale }: { locale: Locale }) {
   }
 
   return (
-    <Button variant="outline" size="icon" onClick={toggle} aria-label="Toggle language">
+    <Button
+      variant="outline"
+      size="icon"
+      data-cuelume-toggle
+      onClick={toggle}
+      aria-label="Toggle language"
+    >
       {locale === "en" ? "FR" : "EN"}
     </Button>
   );

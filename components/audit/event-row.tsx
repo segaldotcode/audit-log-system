@@ -36,7 +36,11 @@ export function EventRow({ log, dict, locale }: EventRowProps) {
     <Dialog>
       <DialogTrigger
         render={
-          <button className="flex w-full items-center justify-between gap-3 rounded-md border border-transparent px-3 py-2 text-left text-sm transition-colors hover:border-border hover:bg-muted/50" />
+          <button
+            data-cuelume-hover="tick"
+            data-cuelume-toggle
+            className="flex w-full items-center justify-between gap-3 rounded-md border border-transparent px-3 py-2 text-left text-sm transition-colors hover:border-border hover:bg-muted/50"
+          />
         }
       >
         <span className="flex min-w-0 items-center gap-3">

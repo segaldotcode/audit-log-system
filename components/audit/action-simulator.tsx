@@ -54,7 +54,7 @@ export function ActionSimulator({ users, dict }: ActionSimulatorProps) {
         </select>
       </div>
 
-      <Button type="submit" size="sm">
+      <Button type="submit" size="sm" data-cuelume-press data-cuelume-release>
         {dict.simulator.submit}
       </Button>
     </form>

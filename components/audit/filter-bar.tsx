@@ -41,13 +41,15 @@ export function FilterBar({ actions, users, dict }: FilterBarProps) {
   return (
     <div className="flex flex-wrap items-center gap-3">
       <Select value={currentAction} onValueChange={(value) => updateParam("action", value)}>
-        <SelectTrigger className="w-45">
+        <SelectTrigger className="w-45" data-cuelume-press data-cuelume-release>
           <SelectValue placeholder={dict.filters.allActions} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={ALL}>{dict.filters.allActions}</SelectItem>
+          <SelectItem value={ALL} data-cuelume-toggle>
+            {dict.filters.allActions}
+          </SelectItem>
           {actions.map((action) => (
-            <SelectItem key={action} value={action}>
+            <SelectItem key={action} value={action} data-cuelume-toggle>
               {dict.actions[action as keyof Dictionary["actions"]] ?? action}
             </SelectItem>
           ))}
@@ -55,13 +57,15 @@ export function FilterBar({ actions, users, dict }: FilterBarProps) {
       </Select>
 
       <Select value={currentUserId} onValueChange={(value) => updateParam("userId", value)}>
-        <SelectTrigger className="w-50">
+        <SelectTrigger className="w-50" data-cuelume-press data-cuelume-release>
           <SelectValue placeholder={dict.filters.allUsers} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={ALL}>{dict.filters.allUsers}</SelectItem>
+          <SelectItem value={ALL} data-cuelume-toggle>
+            {dict.filters.allUsers}
+          </SelectItem>
           {users.map((user) => (
-            <SelectItem key={user.id} value={user.id}>
+            <SelectItem key={user.id} value={user.id} data-cuelume-toggle>
               {user.email}
             </SelectItem>
           ))}

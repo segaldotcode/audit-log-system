@@ -64,6 +64,7 @@ export function Timeline({ logs, nextCursor, filters, dict, locale }: TimelinePr
         <div className="pt-2 text-center">
           <Link
             href={buildNextHref(filters, nextCursor, locale)}
+            data-cuelume-hover="tick"
             className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
           >
             {dict.timeline.loadOlder}
