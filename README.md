@@ -9,23 +9,38 @@ The core idea: every sensitive action in the system should be traceable, searcha
 ## Features
 
 - Centralized `logEvent()` function to record actions with actor, metadata, IP and user agent
-- Automatic logging middleware applied across server actions and routes
-- Timeline UI grouped by date, Notion/Linear style
-- Server-side pagination built in from the start
+- `withAuditLog()` wraps any business action to log its input, result and duration automatically, the "logging middleware" applied to actions instead of raw HTTP requests
+- Timeline UI grouped by date as a collapsible accordion, Notion/Linear style
+- Server-side keyset pagination, built to stay fast at any page depth
 - Filtering by action, user and date range
-- Action replay: inspect the exact input, result and duration behind a logged event
+- Action replay: inspect the exact input, result and duration behind a logged event in a detail dialog
 - Suspicious activity detection (repeated login attempts, unusual payment volume) with a visual alert in the dashboard
+- Action simulator to generate realistic demo events (login, payment, flag, user) without depending on the other ecosystem modules
+- French/English language toggle
+- Light/dark theme toggle (with interaction sounds)
 
 ## Tech stack
 
 - Next.js (App Router)
 - Supabase (`audit_logs` table)
 - Tailwind CSS + Shadcn UI
+- next-themes (dark/light mode)
+- cuelume (interaction sounds)
 - pnpm
 
 ## Screenshots / Demo GIF
 
-Coming soon.
+Light mode:
+
+![Dashboard in light mode](public/assets/screen-light-mode.png)
+
+Dark mode:
+
+![Dashboard in dark mode](public/assets/screen-dark-mode.png)
+
+Simulating an event, opening the replay dialog, and toggling theme/language:
+
+![Demo of the action simulator, replay dialog, theme and language toggles](public/assets/demo.gif)
 
 ## How to reuse
 
@@ -41,5 +56,7 @@ Coming soon.
 - `lib/audit/with-audit-log.ts` wraps a business action so its input, result (or error) and duration are captured and logged automatically, this is the "logging middleware" applied to actions instead of raw HTTP requests
 - `lib/audit/queries.ts` reads the timeline with keyset pagination on `(created_at, id)`, which stays fast at any page depth unlike `OFFSET`
 - `lib/audit/suspicious-activity.ts` slides a fixed time window over each user's recent events to flag rapid login attempts or payment bursts
-- `app/actions.ts` exposes a `simulateAuditEvent` server action used by the dashboard's action simulator to exercise the whole pipeline without depending on the other ecosystem modules
+- `lib/actions/simulate-audit-event.ts` is the server action behind the dashboard's action simulator; it routes to a per-domain simulator under `lib/actions/simulators/` (auth, payments, flags, users), each wrapped in `withAuditLog`, to exercise the whole pipeline without depending on the other ecosystem modules
+- `lib/i18n/` holds `en.json`/`fr.json` dictionaries plus a formatter for the suspicious activity alerts
+- `components/audit/timeline.tsx` groups logs by date into a shadcn Accordion; `event-row.tsx` renders the replay dialog on click
 - `app/page.tsx` composes the filter bar, suspicious activity banner, action simulator and timeline, all server-rendered from the same Supabase read
