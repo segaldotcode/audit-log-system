@@ -1,0 +1,48 @@
+{
+  "title": "Audit Log System",
+  "subtitle": "Every action tracked across the ecosystem, searchable and explainable after the fact.",
+  "actions": {
+    "LOGIN_ATTEMPT": "Login attempt",
+    "LOGIN_SUCCEEDED": "Login succeeded",
+    "LOGIN_FAILED": "Login failed",
+    "PAYMENT_CREATED": "Payment created",
+    "PAYMENT_SUCCEEDED": "Payment succeeded",
+    "PAYMENT_FAILED": "Payment failed",
+    "PAYMENT_REFUNDED": "Payment refunded",
+    "FLAG_TOGGLED": "Flag toggled",
+    "USER_UPDATED": "User updated"
+  },
+  "simulator": {
+    "personaLabel": "Persona",
+    "actionLabel": "Action",
+    "submit": "Simulate event",
+    "empty": "No personas found. Run supabase/schema.sql against your database first."
+  },
+  "filters": {
+    "allActions": "All actions",
+    "allUsers": "All users",
+    "fromDate": "From date",
+    "toDate": "To date"
+  },
+  "suspicious": {
+    "heading": "Suspicious activity detected",
+    "triggered": "triggered {count} events matching \"{label}\" within {minutes} minutes.",
+    "rules": {
+      "rapid_login_attempts": "Too many login attempts in a short window",
+      "rapid_payments": "Too many payments created from the same account"
+    }
+  },
+  "timeline": {
+    "empty": "No audit events match these filters yet. Simulate one above to populate the timeline.",
+    "loadOlder": "Load older events"
+  },
+  "event": {
+    "system": "system",
+    "failed": "failed",
+    "time": "Time",
+    "duration": "Duration",
+    "ip": "IP",
+    "userAgent": "User agent",
+    "replayData": "Replay data"
+  }
+}

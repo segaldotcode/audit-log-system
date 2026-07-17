@@ -1,0 +1,48 @@
+{
+  "title": "Système de journal d'audit",
+  "subtitle": "Chaque action tracée à travers l'écosystème, consultable et explicable a posteriori.",
+  "actions": {
+    "LOGIN_ATTEMPT": "Tentative de connexion",
+    "LOGIN_SUCCEEDED": "Connexion réussie",
+    "LOGIN_FAILED": "Connexion échouée",
+    "PAYMENT_CREATED": "Paiement créé",
+    "PAYMENT_SUCCEEDED": "Paiement réussi",
+    "PAYMENT_FAILED": "Paiement échoué",
+    "PAYMENT_REFUNDED": "Paiement remboursé",
+    "FLAG_TOGGLED": "Flag basculé",
+    "USER_UPDATED": "Utilisateur mis à jour"
+  },
+  "simulator": {
+    "personaLabel": "Persona",
+    "actionLabel": "Action",
+    "submit": "Simuler un événement",
+    "empty": "Aucun persona trouvé. Exécute d'abord supabase/schema.sql sur ta base de données."
+  },
+  "filters": {
+    "allActions": "Toutes les actions",
+    "allUsers": "Tous les utilisateurs",
+    "fromDate": "Date de début",
+    "toDate": "Date de fin"
+  },
+  "suspicious": {
+    "heading": "Activité suspecte détectée",
+    "triggered": "a déclenché {count} événements correspondant à \"{label}\" en {minutes} minutes.",
+    "rules": {
+      "rapid_login_attempts": "Trop de tentatives de connexion en peu de temps",
+      "rapid_payments": "Trop de paiements créés depuis le même compte"
+    }
+  },
+  "timeline": {
+    "empty": "Aucun événement ne correspond à ces filtres. Simules-en un ci-dessus pour remplir la timeline.",
+    "loadOlder": "Voir les événements plus anciens"
+  },
+  "event": {
+    "system": "système",
+    "failed": "échec",
+    "time": "Heure",
+    "duration": "Durée",
+    "ip": "IP",
+    "userAgent": "Agent utilisateur",
+    "replayData": "Données de replay"
+  }
+}
