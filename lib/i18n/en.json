@@ -6,6 +6,7 @@
     "LOGIN_SUCCEEDED": "Login succeeded",
     "LOGIN_FAILED": "Login failed",
     "PAYMENT_CREATED": "Payment created",
+    "PAYMENT_PROCESSING": "Payment processing",
     "PAYMENT_SUCCEEDED": "Payment succeeded",
     "PAYMENT_FAILED": "Payment failed",
     "PAYMENT_REFUNDED": "Payment refunded",

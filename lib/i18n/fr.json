@@ -6,6 +6,7 @@
     "LOGIN_SUCCEEDED": "Connexion réussie",
     "LOGIN_FAILED": "Connexion échouée",
     "PAYMENT_CREATED": "Paiement créé",
+    "PAYMENT_PROCESSING": "Paiement en cours",
     "PAYMENT_SUCCEEDED": "Paiement réussi",
     "PAYMENT_FAILED": "Paiement échoué",
     "PAYMENT_REFUNDED": "Paiement remboursé",

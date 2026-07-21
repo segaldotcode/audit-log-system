@@ -11,6 +11,7 @@ import { simulateUserAction } from "./simulators/users";
 const AUTH_ACTIONS = new Set<AuditAction>(["LOGIN_ATTEMPT", "LOGIN_SUCCEEDED", "LOGIN_FAILED"]);
 const PAYMENT_ACTIONS = new Set<AuditAction>([
   "PAYMENT_CREATED",
+  "PAYMENT_PROCESSING",
   "PAYMENT_SUCCEEDED",
   "PAYMENT_FAILED",
   "PAYMENT_REFUNDED",

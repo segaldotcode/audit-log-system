@@ -4,6 +4,7 @@ import type { RequestContext } from "../request-context";
 
 export type PaymentAction =
   | "PAYMENT_CREATED"
+  | "PAYMENT_PROCESSING"
   | "PAYMENT_SUCCEEDED"
   | "PAYMENT_FAILED"
   | "PAYMENT_REFUNDED";
